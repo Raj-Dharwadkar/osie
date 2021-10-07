@@ -89,6 +89,10 @@ phone_home "${tinkerbell}" '{"type":"provisioning.104"}'
 
 echo -e "${GREEN}### OSIE Version ${OSIE_VERSION} (${OSIE_BRANCH})${NC}"
 
+# Force the provision to fail so we drop down into osie-installer for interactive debugging
+set_autofail_stage "IGNORE: staff testing"
+bogus
+
 ## Pre-prov check
 echo -e "${GREEN}#### Starting pre-provisioning checks...${NC}"
 
