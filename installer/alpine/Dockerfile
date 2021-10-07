@@ -104,8 +104,15 @@ RUN echo "${ASRR_BIOS_DRIVER_SHA512} ${ASRR_BIOS_DRIVER_FILENAME}" | sha512sum -
     make -C /lib/modules/${KERNEL}-${PKGREL}-${FLAVOR}/build M=/home/builder/driver && \
     # install module
     sudo install -D -m 600 driver/asrdev.ko /lib/modules/${KERNEL}-${PKGREL}-${FLAVOR}/extra/ && \
+    # install userspace app
+    sudo install -D -m 755 BIOSControl /usr/sbin/BIOSControl && \
     # clean up
     rm -rf /home/builder/BIOSControl /home/builder/driver /home/builder/ReadMe.txt
+
+# Install ironlib getbiosconfig utility
+COPY getbiosconfig /home/builder/
+RUN sudo install -D -m 755 getbiosconfig /usr/sbin/getbiosconfig && \
+    rm -f /home/builder/getbiosconfig
 
 # Remove built and installed packages, these never get installed at runtime
 RUN rm -rf /home/builder/packages/*
